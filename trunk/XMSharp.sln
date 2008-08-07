@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMSharp.Gui", "XMSharp.Gui\XMSharp.Gui.csproj", "{ED15BB49-CB5A-4448-96F1-5A2FC11E50DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMSharp", "XMSharp\XMSharp.csproj", "{78A5FA6A-FC39-4C35-888B-34AB94D94660}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMSharp.MediaPortal", "XMSharp.MediaPortal\XMSharp.MediaPortal.csproj", "{E2BD8C91-482A-458D-A86A-E853AF42A8FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED15BB49-CB5A-4448-96F1-5A2FC11E50DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED15BB49-CB5A-4448-96F1-5A2FC11E50DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED15BB49-CB5A-4448-96F1-5A2FC11E50DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED15BB49-CB5A-4448-96F1-5A2FC11E50DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78A5FA6A-FC39-4C35-888B-34AB94D94660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A5FA6A-FC39-4C35-888B-34AB94D94660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A5FA6A-FC39-4C35-888B-34AB94D94660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A5FA6A-FC39-4C35-888B-34AB94D94660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2BD8C91-482A-458D-A86A-E853AF42A8FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2BD8C91-482A-458D-A86A-E853AF42A8FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2BD8C91-482A-458D-A86A-E853AF42A8FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2BD8C91-482A-458D-A86A-E853AF42A8FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
