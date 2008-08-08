@@ -90,7 +90,6 @@
     <ProjectReference Include="..\XMSharp\XMSharp.csproj">
       <Project>{78A5FA6A-FC39-4C35-888B-34AB94D94660}</Project>
       <Name>XMSharp</Name>
-      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
