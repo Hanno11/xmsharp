@@ -27,8 +27,8 @@ namespace XMSharp.Gui
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
 
 			player.OnChannelInfoChanged += new XMPlayer.ChannelInfoChangedDelegate(player_OnChannelInfoChanged);
-			player.Email = "peleehydroponics@gmail.com";
-			player.Password = "dick9478";
+			player.Email = "";
+			player.Password = "";
 
 			player.Login();
 
