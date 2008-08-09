@@ -12,7 +12,7 @@ namespace XMSharp.MP
 	{
 		public const string DefaultMenuName = "XM Radio";
 		private XMSharp.XMPlayer player = new XMPlayer();
-			
+			       
 		#region ISetupForm Members
 
 		// Returns the name of the plugin which is shown in the plugin menu
@@ -253,9 +253,9 @@ namespace XMSharp.MP
 			if (player.Login())
 			{
 				//Load channels
-				player.UpdateChannels(true);
+                player.UpdateChannels(true);
                 player.UpdateChannelNeighborhoods();
-
+                
                 //bindChannels();				
 			}
 			else
@@ -299,7 +299,12 @@ namespace XMSharp.MP
 				int chanNum = (int)this.listChannels.ListItems[iItem].TVTag;
 
 				//Get the actual channel
-				XMChannel chan = player.Channels[chanNum];
+                XMChannel chan = null;
+
+                chan = player.Channels[chanNum];
+                
+                if (chan == null)
+                    return;
 
 				GUIDialogMenu dlgMenu = (GUIDialogMenu)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_MENU);
 				if (dlgMenu != null)
