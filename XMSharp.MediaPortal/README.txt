@@ -11,10 +11,19 @@ Copy all the files except the 'skins' folder into your 'Team MediaPortal\Plugins
 From the appropriate skin folder inside the 'skins' folder, copy the xmsharpmp.xml file into the corresponding
 folder in your 'Team MediaPortal\Plugins\skins\<skinName>\' folder.
 
+NOTE: You MUST have VideoLAN VLC installed for this plugin to work, INCLUDING the ActiveX Control for VLC.
+You are given a choice to install the ActiveX Control during the VideoLAN VLC installation.
+If you do not have these installed, you will see a type of 'Incompatible Version' error in MediaPortal!
+
 Releases:
 =================
 
-08-Aug-2008   v.1.0.1
+09-Aug-2008   v.1.0.4
+ - Added thread locking on the channels list in XMSharp so MediaPortal shouldn't crash from
+   List modification/enumeration conflicts
+ - Fixed the navigation order for Preset 3 button in all skins
+
+08-Aug-2008   v.1.0.2
  - Initial Release
  - Basic Channel List with images
  - Now Playing Information
