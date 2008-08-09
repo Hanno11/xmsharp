@@ -10,6 +10,8 @@ namespace XMSharp
 {
 	public class XMPlayer
 	{
+        internal static object ChannelListLock = new object();
+
 		#region Constructor
 		public XMPlayer()
 		{
@@ -160,7 +162,7 @@ namespace XMSharp
 		}
 		#endregion
 
-		public bool Login()
+        public bool Login()
 		{			
 			cookies = new CookieContainer();
 			string loginPageResponse = Http.Get(urlPreLogin, cookies);
@@ -171,6 +173,7 @@ namespace XMSharp
 			postVars.Add("confirmationCode", "");
 			postVars.Add("go.x", "12");
 			postVars.Add("go.y", "3");
+
 	
 			Http.HttpSubmitInfo submit = new Http.HttpSubmitInfo();
 			submit.AllowAutoRedirect = true;
@@ -187,14 +190,23 @@ namespace XMSharp
 				
 			string loginResponse = Http.Post(submit);
 			string config = Http.Get(urlConfig, cookies);
+
+            CookieCollection cookieCol = cookies.GetCookies(new Uri("http://xmro.xmradio.com"));
+
+            
+            foreach (Cookie cookieOn in cookieCol)
+                Console.WriteLine(cookieOn.Name + ":" + cookieOn.Value + "  " + cookieOn.Expires.ToString());
 			
             if (loginResponse.Contains(loginSuccessValue))
             {
                 loggedIn = true;
 				lastLogin = DateTime.Now;
 
-                UpdateChannels();
-				UpdateChannelNeighborhoods();
+                lock (ChannelListLock)
+                {
+                    UpdateChannels();
+                    UpdateChannelNeighborhoods();
+                }
 
 				if (!initialLogin)
 				{
@@ -219,7 +231,10 @@ namespace XMSharp
 			if (vlc.Playing)
 				vlc.stop();
 
-			UpdateCurrentChannel();
+            lock (ChannelListLock)
+            {
+                UpdateCurrentChannel();
+            }
 
 			string playerResponse = Http.Get(urlPlayChannel.Replace("{Number}", newChannel.Number.ToString()), cookies);
 
@@ -258,7 +273,16 @@ namespace XMSharp
             if (Channels.Count > 0)
             {
                 string data = Http.Get(urlChannelNeighborhoods, cookies);
-                Utility.XMRPCParser.ParseChannelNeighborhoods(data, Channels);
+
+                List<XMChannel> changedChannels = new List<XMChannel>();
+
+                lock (ChannelListLock)
+                {
+                   changedChannels = Utility.XMRPCParser.ParseChannelNeighborhoods(data, Channels);
+                }
+
+                if (changedChannels.Count > 0 && OnChannelInfoChanged != null)
+                    OnChannelInfoChanged(changedChannels);
             }
 
             return true;
@@ -276,9 +300,14 @@ namespace XMSharp
 
 			string channelListing = Http.Get(urlXmlChannelData, cookies);
 
-			List<XMChannel> changedChannels = Utility.XMRPCParser.ParseChannelData(channelListing, this.Channels);
+            List<XMChannel> changedChannels = new List<XMChannel>();
 
-			if (OnChannelInfoChanged != null)
+            lock (ChannelListLock)
+            {
+               changedChannels = Utility.XMRPCParser.ParseChannelData(channelListing, this.Channels);
+            }
+
+			if (changedChannels.Count > 0 && OnChannelInfoChanged != null)
 				OnChannelInfoChanged(changedChannels);
 		
 			return true;
@@ -294,9 +323,14 @@ namespace XMSharp
 
 			string channelSingle = Http.Get(urlXmlChannelSingle.Replace("{Number}", channel.Number.ToString()), cookies);
 
-			List<XMChannel> changedChannels = Utility.XMRPCParser.ParseChannelData(channelSingle, this.Channels);
+            List<XMChannel> changedChannels = new List<XMChannel>();
 
-			if (OnChannelInfoChanged != null)
+            lock (ChannelListLock)
+            {
+                changedChannels = Utility.XMRPCParser.ParseChannelData(channelSingle, this.Channels);
+            }
+
+			if (changedChannels.Count > 0 && OnChannelInfoChanged != null)
 				OnChannelInfoChanged(changedChannels);
 
 			return true;

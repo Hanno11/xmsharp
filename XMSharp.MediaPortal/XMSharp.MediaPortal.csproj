@@ -31,12 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Core, Version=0.9.2.16104, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Core, Version=0.9.2.33164, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferencedAssemblies\Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Dialogs, Version=0.2.3.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Dialogs, Version=0.9.2.33169, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferencedAssemblies\Dialogs.DLL</HintPath>
       <Private>False</Private>
@@ -46,7 +46,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Utils, Version=2.2.6.16097, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Utils, Version=2.2.6.33157, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferencedAssemblies\Utils.dll</HintPath>
       <Private>False</Private>
