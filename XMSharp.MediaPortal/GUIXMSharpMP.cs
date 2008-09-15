@@ -152,14 +152,23 @@ namespace XMSharp.MP
         protected GUIFadeLabel labelNPSong = null;
 		#endregion
 
+		void logException(string methodName, Exception ex)
+		{
+
+		}
+
 		public override bool Init()
         {
-            return Load(Config.GetFile(Config.Dir.Skin, "XMSharpMP", "xmsharpmp.xml"));
+			bool result = false;
+
+			try { result = Load(Config.GetFile(Config.Dir.Skin, "XMSharpMP", "xmsharpmp.xml")); }
+			catch (Exception ex) { result = false; logException("Init", ex); }
         }
 
 		void player_OnChannelInfoChanged(List<XMChannel> changedChannels)
 		{
-			bindChannels();
+			try { bindChannels(); }
+			catch (Exception ex) { logException("player_OnChannelInfoChanged", ex); }
 			////Loop through all of the 'changed' channels
 			//foreach (XMChannel chanOn in changedChannels)
 			//{
@@ -237,8 +246,15 @@ namespace XMSharp.MP
 
         public override void DeInit()
         {
-            player.Stop();
-            base.DeInit();
+			try
+			{
+				player.Stop();
+				base.DeInit();
+			}
+			catch (Exception ex)
+			{
+				logException("DeInit", ex);
+			}
         }
 
         
