@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMSharp.Gui", "XMSharp.Gui\XMSharp.Gui.csproj", "{ED15BB49-CB5A-4448-96F1-5A2FC11E50DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMSharp", "XMSharp\XMSharp.csproj", "{78A5FA6A-FC39-4C35-888B-34AB94D94660}"
