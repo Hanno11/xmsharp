@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Net;
+using System.Xml;
 using XMSharp.Utility;
 
 namespace XMSharp
@@ -41,7 +42,10 @@ namespace XMSharp
 		#endregion
 
 		#region Private
-		private AXVLC.VLCPlugin vlc = new AXVLC.VLCPluginClass();
+                //private AXVLC.VLCPlugin2 vlc = new AXVLC.VLCPlugin2Class();
+                //private AXVLC.VLCPlugin vlc1 = new AXVLC.VLCPluginClass();
+        private AXVLC.VLCPlugin2 vlc = new AXVLC.VLCPlugin2Class();
+                        //.VLCPlugin vlc = new AXVLC.VLCPluginClass();
 		private CookieContainer cookies = new CookieContainer();
 
 		private int loginTimeout = 3;
@@ -55,7 +59,7 @@ namespace XMSharp
 
 		System.Threading.Timer allChannelsPollingTimer = null;
 		System.Threading.Timer currentChannelPollingTimer = null;
-				
+
 		private string email = string.Empty;
         private string password = string.Empty;
         private XMChannelList channels = new XMChannelList();
@@ -227,9 +231,26 @@ namespace XMSharp
 				currentChannel.ToString();
 
 			currentChannel = newChannel;
-			
-			if (vlc.Playing)
-				vlc.stop();
+
+                        //vlc is thowing an exception when trying to access any sort of status about
+                        //the current file if nothing is loaded.  A VLC issue?
+			/*if (vlc.Playing)
+				vlc.stop();*/
+                        try
+                        {
+                                if (vlc.playlist.isPlaying)
+                                {
+                                        vlc.playlist.stop();
+                                }
+                        }
+                        catch
+                        {
+                                //If nothing is loaded, COM object returns an error if 
+                                //checking vlc.playlist.isPlaying
+                                //This will ignore that case, but needs to be handled
+                        }
+                        
+                       
 
             lock (ChannelListLock)
             {
@@ -242,14 +263,43 @@ namespace XMSharp
 
 			if (streamMatch != null)
 			{
+                                
 				//string[] options = new string[] { ":mms-caching=3000", ":mms-timeout=10000" };
 				string[] options = new string[] { };
 
 				string streamUrl = streamMatch.Groups["Stream"].Value.Trim();
-				vlc.playlistClear();
-				vlc.AutoPlay = true;
-				vlc.addTarget(streamUrl, options, AXVLC.VLCPlaylistMode.VLCPlayListReplaceAndGo, 0);
-				vlc.play();
+                string asxRedirect = Http.Get(streamUrl, cookies);
+                string mmsStream = string.Empty;
+
+                XmlTextReader asxText = new XmlTextReader(new System.IO.StringReader(asxRedirect));
+
+                //find the mms stream address
+                while (asxText.Read())
+                {
+                //TODO: END WHILE IF AT THE END OF THE ASX FILE
+                //WOULD CRASH IF NO "Ref" FOUND
+                        if (asxText.Name == "Ref" && asxText.HasAttributes)
+                        {
+                                mmsStream = asxText.GetAttribute("href");
+                                break;
+                        }
+                }
+                               
+                /*Original vlc plugin function calls*/
+				//vlc.playlistClear();
+				//vlc.AutoPlay = true;
+				//vlc.addTarget(streamUrl, options, AXVLC.VLCPlaylistMode.VLCPlayListReplaceAndGo, 0);
+				//vlc.play();
+
+                //Using vlc plugin2
+                vlc.playlist.clear();
+                vlc.AutoPlay = true;
+                vlc.playlist.add(mmsStream, null, options);
+
+                //For some reason .play() always continues to play the first loaded 
+                //station regardless of channel selection.  Calling .playItem(0) 
+                //picks up on the changed channel
+                vlc.playlist.playItem(0);
 			}
 
 			if (!old.Equals(currentChannel.ToString()))
@@ -338,7 +388,7 @@ namespace XMSharp
 
         public bool Stop()
         {
-            vlc.stop();
+            vlc.playlist.stop();
             return true;
         }
 

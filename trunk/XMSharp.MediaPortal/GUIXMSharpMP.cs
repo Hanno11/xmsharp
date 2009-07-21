@@ -163,6 +163,8 @@ namespace XMSharp.MP
 
 			try { result = Load(Config.GetFile(Config.Dir.Skin, "XMSharpMP", "xmsharpmp.xml")); }
 			catch (Exception ex) { result = false; logException("Init", ex); }
+
+                        return false;
         }
 
 		void player_OnChannelInfoChanged(List<XMChannel> changedChannels)

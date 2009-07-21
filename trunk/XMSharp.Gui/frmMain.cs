@@ -19,7 +19,6 @@ namespace XMSharp.Gui
 		}
 
 		XMPlayer player = new XMPlayer();
-
 		
 
 		private void frmMain_Load(object sender, EventArgs e)
@@ -27,8 +26,8 @@ namespace XMSharp.Gui
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
 
 			player.OnChannelInfoChanged += new XMPlayer.ChannelInfoChangedDelegate(player_OnChannelInfoChanged);
-			player.Email = "";
-			player.Password = "";
+            player.Email = string.Empty;
+			player.Password = string.Empty;
 
 			player.Login();
 
@@ -40,6 +39,7 @@ namespace XMSharp.Gui
 		{
 			
 			bool exists = false;
+            //CheckForIllegalCrossThreadCalls = false;
 
 			foreach (XMChannel chan in changedChannels)
 			{
