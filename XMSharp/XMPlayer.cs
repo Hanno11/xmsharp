@@ -243,11 +243,12 @@ namespace XMSharp
                                         vlc.playlist.stop();
                                 }
                         }
-                        catch
+                        catch(Exception ex)
                         {
                                 //If nothing is loaded, COM object returns an error if 
                                 //checking vlc.playlist.isPlaying
                                 //This will ignore that case, but needs to be handled
+                            Utility.errorLog.addException("ChangeChannel", ex.ToString());
                         }
                         
                        
@@ -388,7 +389,17 @@ namespace XMSharp
 
         public bool Stop()
         {
-            vlc.playlist.stop();
+            try
+            {
+                vlc.playlist.stop();
+            }
+            catch(Exception ex)
+            {
+                //TODO: Check VLC documentation.  If nothing is loaded in the playlist
+                //VLC crashes out on calls like play() and stop().  Maybe VLC needs 
+                //initialized or this is just a VLC bug.
+                Utility.errorLog.addException("Stop", ex.ToString()); 
+            }
             return true;
         }
 

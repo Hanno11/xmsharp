@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lock.cs" />
+    <Compile Include="Utility\errorLogger.cs" />
     <Compile Include="Utility\Encoding.cs" />
     <Compile Include="Utility\XMRPCParser.cs" />
     <Compile Include="XMChannel.cs" />
