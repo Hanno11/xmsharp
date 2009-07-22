@@ -125,7 +125,10 @@ namespace XMSharp.Utility
 				MemoryStream ms = new MemoryStream(imgData);
 				toReturn = Image.FromStream(ms);
 			}
-			catch { }
+			catch(Exception ex) 
+            {
+                Utility.errorLog.addException("GetImage", ex.ToString());
+            }
 
 			return toReturn;
 		}
@@ -248,11 +251,20 @@ namespace XMSharp.Utility
 		private static string stringRequest(HttpSubmitInfo info)
 		{
 			HttpWebRequest web = formulateWebRequest(info);
+            string response = string.Empty;
 
 			//Get the response
-			HttpWebResponse res = (HttpWebResponse)web.GetResponse();
-			StreamReader sr = new StreamReader(res.GetResponseStream());
-			string response = sr.ReadToEnd();
+            try
+            {
+                HttpWebResponse res = (HttpWebResponse)web.GetResponse();
+                StreamReader sr = new StreamReader(res.GetResponseStream());
+                response = sr.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                Utility.errorLog.addException("stringRequest", ex.ToString());
+            }
+
 
 			return response;
 		}

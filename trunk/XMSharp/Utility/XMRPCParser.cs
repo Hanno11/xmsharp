@@ -68,6 +68,12 @@ namespace XMSharp.Utility
 			int artistID = -1;
 			string linkUrl = string.Empty;
 
+            //If we get an empty xml string, return an empty changed channel list
+            if (xml.Equals(string.Empty))
+            {
+                return changedChannels;
+            }
+
 			while (xr.Read())
 			{
 				switch (xr.Name.ToLower())

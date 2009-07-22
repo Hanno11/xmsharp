@@ -234,7 +234,10 @@ namespace XMSharp
             {
                 img.Save(path);
             }
-            catch { }
+            catch(Exception ex) 
+            {
+                //Utility.errorLog.addException("saveImage", ex.ToString());
+            }
         }
 	}
 }

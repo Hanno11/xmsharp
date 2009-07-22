@@ -26,8 +26,11 @@ namespace XMSharp.Gui
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
 
 			player.OnChannelInfoChanged += new XMPlayer.ChannelInfoChangedDelegate(player_OnChannelInfoChanged);
-            player.Email = string.Empty;
-			player.Password = string.Empty;
+            //player.Email = string.Empty;
+			//player.Password = string.Empty;
+
+            player.Email = "scuba264@gmail.com";
+            player.Password = "changeme";
 
 			player.Login();
 
@@ -39,7 +42,10 @@ namespace XMSharp.Gui
 		{
 			
 			bool exists = false;
-            //CheckForIllegalCrossThreadCalls = false;
+
+            //Trying this to stop the illegal thread activity messages
+            //when updating channel info
+            CheckForIllegalCrossThreadCalls = false;
 
 			foreach (XMChannel chan in changedChannels)
 			{
